@@ -1,26 +1,20 @@
 
-const Student = require('./Student');
+const Message = require('./Message');
 
 let myDatabase = function() {
-	this.students = [];
+	this.messages = [];
 }
 
-let studentIndex = 0;
+let messageIndex = 0;
 
-myDatabase.prototype.displayStudents = function() {
-	for (let i=0;i<this.students.length;i++) {
-		console.log(this.students[i]);
+myDatabase.prototype.displayMessages = function() {
+	for (let i=0;i<this.messages.length;i++) {
+		console.log(this.messages[i]);
 	}
 }
 
-myDatabase.prototype.postStudent = function(student) {
-  for (let i=0;i<this.students.length;i++) {
-    if (this.students[i] && this.students[i].id == student.id) {
-      return false;
-    }
-  }
-//	this.students[studentIndex++] = student;
-	this.students[studentIndex++] = new Student(student.id,student.name,student.age,student.grade);
+myDatabase.prototype.postMessage = function(message) {
+	this.messages[messageIndex++] = new Message(message.name,message.comment);
 	return true;
 }
 

@@ -3,48 +3,25 @@
 let path = require("path");
 let express = require("express");    //new
 let router = express.Router();      //new
+const myDatabase = require('./myDatabase');
+const Message = require('./Message');
+let db = new myDatabase();
 
 
 router.get("/",function(req,res){
 //	res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
 	res.sendFile(path.resolve(__dirname,"public/views/index.html"));
 });
-
-
-const myDatabase = require('./myDatabase');
-let db = new myDatabase();
-
-const Student = require('./Student');
-
 router.post('/create', function(req, res){
-	if (req.body.name == "") {
+	if (req.body.name == "" || req.body.comment == "") {
 		res.json({retVal:false});
 		return;
 	}
-	let obj = new Student(req.body.identifier,req.body.name);
-	res.json({retVal:db.postStudent(obj)});
+	let obj = new Message(req.body.name,req.body.comment);
+	console.log("----New message:(Name:"+req.body.name+")(Comment:"+req.body.comment+")----")
+	db.postMessage(obj);
+	db.displayMessages();
+	res.json({retVal:true});
 });
-
-
-router.get('/read', function(req, res){
-	res.json({retVal:db.getStudent(req.query.identifier)});
-});
-
-
-router.put('/update', function(req, res){
-	if (req.body.name == "") {
-		res.json({retVal:false});
-		return;
-	}
-	let obj = new Student(req.body.identifier,req.body.name);
-	res.json({retVal:db.putStudent(obj)});
-});
-
-router.delete('/delete/:identifier', function(req, res){
-	res.json({retVal:db.deleteStudent(req.params.identifier)});
-});
-
-
-
 
 module.exports = router;   //new
