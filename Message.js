@@ -1,6 +1,6 @@
-let Message = function(name,comment) {
+let Message = function(name,message) {
 	this.name = name;
-	this.comment = comment;
+	this.message = message;
 }
 
 module.exports = Message;

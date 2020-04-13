@@ -12,13 +12,16 @@ myDatabase.prototype.displayMessages = function() {
 		console.log(this.messages[i]);
 	}
 }
-
+myDatabase.prototype.getMessages = function() {
+	return this.messages;
+}
 myDatabase.prototype.postMessage = function(message) {
-	this.messages[messageIndex++] = new Message(message.name,message.comment);
+	this.messages[messageIndex++] = new Message(message.name,message.message);
+	console.log("Successfully added new message to database.")
 	return true;
 }
 
-myDatabase.prototype.getStudent = function(id) {
+myDatabase.prototype.getMessage = function(id) {
   for (let i=0;i<this.students.length;i++) {
     if (this.students[i] && id == this.students[i].id)
 		{
