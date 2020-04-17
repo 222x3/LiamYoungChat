@@ -1,21 +1,5 @@
-function createClicked(){
-    $.ajax({
-      url: "/create",
-      type: "POST",
-      data: {name:$("#myName").val(),message:$("#myMessage").val()},
-      success: function(data){
-        if (!data)
-          alert("bad create");
-        else if (data.retVal)
-          alert("good create");
-        else
-          alert("bad create");
-        } ,
-      dataType: "json"
-    });
-  return false;
-}
-function readClicked(){
+(function(){
+  setInterval(function(){
     $.ajax({
       url: "/read",
       type: "GET",
@@ -27,13 +11,23 @@ function readClicked(){
           let htmlMessage = "<li id='removeOnRead'>"+messages.messages[i].name+": "+messages.messages[i].message+"</li>";
           $("#chatLog").append(htmlMessage)
         }
-
       } ,
       dataType: "json"
     });
-  return false;
-}
-$(document).ready(function(){
-  $("#createButton").click(createClicked);
-  $("#readButton").click(readClicked);
+  }, 1000);
+})();
+$(document).keypress(function(e) {
+    var keycode = (e.keyCode ? e.keyCode : e.which);
+    if (keycode == '13') {
+      $.ajax({
+        url: "/create",
+        type: "POST",
+        data: {name:$("#myName").val(),message:$("#myMessage").val()},
+        success: function(data){
+          console.log(data);
+          $("#myMessage").val("");
+          } ,
+        dataType: "json"
+      });
+    }
 });
