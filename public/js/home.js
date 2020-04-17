@@ -14,7 +14,7 @@
       } ,
       dataType: "json"
     });
-  }, 1000);
+  }, 50);
 })();
 $(document).keypress(function(e) {
     var keycode = (e.keyCode ? e.keyCode : e.which);
